@@ -11,36 +11,140 @@
   :root {
     --paper: #EFE9DC; --card: #F8F4EA; --ink: #2B2620; --ink-soft: #5A5245;
     --brick: #7A3B2E; --pine: #3F5D54; --tan: #A69C87; --tan-line: #D8CFBB; --gold: #B08A3E;
+    --measure: 68ch;
+    --scale: 1;
   }
+  html[data-theme="sepia"] {
+    --paper: #F2E2B9; --card: #F7EBCB; --ink: #3B2A15; --ink-soft: #6B5636;
+    --tan: #B79B63; --tan-line: #E0CB93;
+  }
+  html[data-theme="night"] {
+    --paper: #1B1913; --card: #221F17; --ink: #E7E0CE; --ink-soft: #B4AC96;
+    --brick: #D98E73; --pine: #7FAE9E; --tan: #6B6552; --tan-line: #38342A; --gold: #D9B368;
+  }
+
   * { box-sizing: border-box; }
-  body { margin:0; background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body {
+    margin:0; background: var(--paper); color: var(--ink);
+    font-family: 'Source Serif 4', serif; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    font-size: calc(1rem * var(--scale));
+    transition: background 0.2s ease, color 0.2s ease;
+  }
   a { color: var(--brick); }
+  img, table { max-width: 100%; }
+
   .backlink {
     display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
     padding: 1.1rem 1.5rem 0; color: var(--ink-soft); text-decoration: none;
   }
   .backlink:hover { color: var(--brick); }
-  header { padding: 1rem 1.5rem 2rem; max-width: 760px; margin: 0 auto; }
+
+  /* Reader toolbar */
+  .toolbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--tan-line);
+    padding: 0.7rem 1.5rem;
+    display: flex; flex-wrap: wrap; gap: 0.9rem 1.4rem;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    margin-top: 1rem;
+  }
+  .tb-group { display: flex; align-items: center; gap: 0.4rem; }
+  .tb-label { color: var(--tan); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.15rem; }
+  .tb-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    border: 1.5px solid var(--tan); background: transparent; color: var(--ink-soft);
+    padding: 0.32rem 0.6rem; border-radius: 4px; cursor: pointer;
+  }
+  .tb-btn:hover { border-color: var(--brick); color: var(--brick); }
+  .tb-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .tb-swatch {
+    width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
+    border: 2px solid var(--tan-line);
+  }
+  .tb-swatch.active { border-color: var(--brick); }
+  .sw-light { background: #EFE9DC; }
+  .sw-sepia { background: #F2E2B9; }
+  .sw-night { background: #1B1913; }
+
+  header { padding: 1.4rem 1.5rem 0.5rem; max-width: 760px; margin: 0 auto; }
   .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brick); margin: 0 0 0.6rem; }
-  h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.1; margin: 0 0 1.2rem; }
-  table.meta { width: 100%; border-collapse: collapse; font-size: 0.88rem; background: var(--card); border: 1px solid var(--tan-line); }
-  table.meta th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--tan-line); width: 34%; vertical-align: top; }
-  table.meta td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--tan-line); vertical-align: top; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.1; margin: 0 0 1.2rem; overflow-wrap: break-word; }
+
+  table.meta { width: 100%; border-collapse: collapse; font-size: 0.86rem; background: var(--card); border: 1px solid var(--tan-line); table-layout: fixed; }
+  table.meta th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--tan-line); width: 32%; vertical-align: top; }
+  table.meta td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--tan-line); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
   table.meta tr:last-child th, table.meta tr:last-child td { border-bottom: none; }
-  main { max-width: 760px; margin: 0 auto; padding: 0 1.5rem 4rem; }
-  main h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; color: var(--brick); margin: 2.2rem 0 0.6rem; }
-  main p { margin: 0 0 1.1rem; font-size: 1.02rem; }
+
+  .toc {
+    max-width: 760px; margin: 1.6rem auto 0; padding: 1rem 1.5rem;
+    background: var(--card); border: 1px solid var(--tan-line); border-radius: 4px;
+  }
+  .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tan); margin: 0 0 0.6rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; columns: 2; column-gap: 1.5rem; }
+  .toc li { font-size: 0.9rem; margin-bottom: 0.4rem; break-inside: avoid; }
+  .toc a { text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  main {
+    max-width: var(--measure); margin: 0 auto; padding: 1.6rem 1.5rem 4rem;
+  }
+  main h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; color: var(--brick); margin: 2.2rem 0 0.6rem; scroll-margin-top: 4.5rem; }
+  main p { margin: 0 0 1.1rem; overflow-wrap: break-word; }
+  main.justify p { text-align: justify; hyphens: auto; }
+
   footer { text-align: center; padding: 2rem 1.5rem 3rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--tan); }
+
+  @media (max-width: 600px) {
+    .toc ol { columns: 1; }
+    .toolbar { font-size: 0.68rem; gap: 0.6rem 1rem; }
+  }
 </style>
 </head>
 <body>
 <a class="backlink" href="../index.html">&larr; Back to Five Star Series index</a>
+
+<div class="toolbar">
+  <div class="tb-group" role="group" aria-label="Theme">
+    <span class="tb-label">Theme</span>
+    <button class="tb-swatch sw-light" data-theme="light" title="Light" aria-label="Light theme"></button>
+    <button class="tb-swatch sw-sepia" data-theme="sepia" title="Sepia" aria-label="Sepia theme"></button>
+    <button class="tb-swatch sw-night" data-theme="night" title="Night" aria-label="Night theme"></button>
+  </div>
+  <div class="tb-group" role="group" aria-label="Text size">
+    <span class="tb-label">Size</span>
+    <button class="tb-btn" id="sizeDown" aria-label="Decrease text size">A-</button>
+    <button class="tb-btn" id="sizeUp" aria-label="Increase text size">A+</button>
+  </div>
+  <div class="tb-group" role="group" aria-label="Line width">
+    <span class="tb-label">Width</span>
+    <button class="tb-btn" data-measure="52ch">Narrow</button>
+    <button class="tb-btn" data-measure="68ch">Medium</button>
+    <button class="tb-btn" data-measure="88ch">Wide</button>
+  </div>
+  <div class="tb-group" role="group" aria-label="Justification">
+    <span class="tb-label">Align</span>
+    <button class="tb-btn" data-justify="left">Left</button>
+    <button class="tb-btn" data-justify="justify">Justify</button>
+  </div>
+</div>
+
 <header>
   <p class="eyebrow">Track #0898</p>
   <h1>Principles of bhakti</h1>
-  <table class="meta"><tr><th>Event Name/Title</th><td>Principles of bhakti</td></tr><tr><th>Event Date</th><td>07 Jan 2007</td></tr><tr><th>Event Location</th><td>India, Mumbai, ISKCON Chowpatty</td></tr><tr><th>Event Type</th><td>Temple - SB class</td></tr><tr><th>Transcriber</th><td>Venkata Govinda das, Anuradha Tripathi, Vrajabhakti devi dasi</td></tr><tr><th>Completed</th><td>27 Mar 2024</td></tr><tr><th>Source Audio</th><td><a href="https://www.radhanathswamimedia.com/Lec/2007/07-001-Morning%20SB%20Class%20(Mumbai)-SB_6_7_24-dt_07_01_07.MP3" target="_blank" rel="noopener">https://www.radhanathswamimedia.com/Lec/2007/07-001-Morning%20SB%20Class%20(Mumbai)-SB_6_7_24-dt_07_01_07.MP3</a></td></tr><tr><th>Source Video</th><td>NA</td></tr><tr><th>Verse</th><td>SB 6.7.24</td></tr><tr><th>Tags – Places</th><td>Vrindavan, Goloka, Navadvipa, Jagannath Puri, Mithila, Vaikuntha</td></tr><tr><th>Tags – Pastimes</th><td>Romharsana killed by Balaramaji, Indra disrespecting Bṛhaspati, Ramchandra&#x27;s service to Visvamitra Muni</td></tr><tr><th>Tags – Persons</th><td>Krishna, Indra, Bṛhaspati, Sudama Vipra, Radharani</td></tr><tr><th>Tags – Themes</th><td>Vaishnava etiquette, Bhakti Principles, Cow Protection, Faith</td></tr></table>
+  <table class="meta"><tr><th>Event Name/Title</th><td>Principles of bhakti</td></tr><tr><th>Event Date</th><td>07 Jan 2007</td></tr><tr><th>Event Location</th><td>India, Mumbai, ISKCON Chowpatty</td></tr><tr><th>Event Type</th><td>Temple - SB class</td></tr><tr><th>Transcriber</th><td>Venkata Govinda das, Anuradha Tripathi, Vrajabhakti devi dasi</td></tr><tr><th>Completed</th><td>27 Mar 2024</td></tr><tr><th>Source Audio</th><td><a href="https://www.radhanathswamimedia.com/Lec/2007/07-001-Morning%20SB%20Class%20(Mumbai)-SB_6_7_24-dt_07_01_07.MP3" target="_blank" rel="noopener" style="word-break:break-all;">https://www.radhanathswamimedia.com/Lec/2007/07-001-Morning%20SB%20Class%20(Mumbai)-SB_6_7_24-dt_07_01_07.MP3</a></td></tr><tr><th>Source Video</th><td>NA</td></tr><tr><th>Verse</th><td>SB 6.7.24</td></tr><tr><th>Tags – Places</th><td>Vrindavan, Goloka, Navadvipa, Jagannath Puri, Mithila, Vaikuntha</td></tr><tr><th>Tags – Pastimes</th><td>Romharsana killed by Balaramaji, Indra disrespecting Bṛhaspati, Ramchandra&#x27;s service to Visvamitra Muni</td></tr><tr><th>Tags – Persons</th><td>Krishna, Indra, Bṛhaspati, Sudama Vipra, Radharani</td></tr><tr><th>Tags – Themes</th><td>Vaishnava etiquette, Bhakti Principles, Cow Protection, Faith</td></tr></table>
 </header>
-<main>
+
+<nav class="toc">
+  <p class="toc-label">In this lecture</p>
+  <ol><li><a href="#lecture-transcription">Lecture Transcription</a></li><li><a href="#crucial-principles-of-bhakti">Crucial principles of bhakti</a></li><li><a href="#how-to-worship-the-deities">How to Worship the Deities?</a></li><li><a href="#dhama-apradhas">Dhama Apradhas</a></li><li><a href="#possessing-opulence-s-and-following-vais">Possessing Opulence&#x27;s and following Vaishnava etiquette</a></li><li><a href="#krishna-following-vaishnava-etiquette">Krishna Following Vaishnava Etiquette</a></li><li><a href="#mahaprabhu-teaches-us-vaishnava-etiquett">Mahaprabhu teaches us Vaishnava etiquette</a></li><li><a href="#today-is-the-time-to-learn">Today is the time to learn</a></li><li><a href="#brahma-criticizing-the-demigods">Brahma criticizing the demigods</a></li><li><a href="#who-are-brahmans">Who are Brahmans?</a></li><li><a href="#why-does-krishna-love-cows">Why does Krishna love cows?</a></li><li><a href="#proper-etiquette-transforms-every-place-">Proper etiquette transforms every place in to Vaikuntha</a></li><li><a href="#srila-prabhupada-ki-devotees-jay">Srila Prabhupada ki…[Devotees:] &quot;jay!&quot;</a></li></ol>
+</nav>
+
+<main id="mainText">
 <p>[Mangalacarana]</p>
 <p>tripiṣṭapaṁ kiṁ gaṇayanty abhedya-<br>
 mantrā bhṛgūṇām anuśikṣitārthāḥ<br>
@@ -50,9 +154,9 @@ bhavanty abhadrāṇi nareśvarāṇām</p>
 <p>[Because of their firm determination to follow the instructions of Śukrācārya, his disciples, the demons, are now unconcerned about the demigods. In fact, kings or others who have determined faith in the mercy of brāhmaṇas, cows and the Supreme Personality of Godhead, Kṛsna, and who always worship these three are always strong in their position.]</p>
 <p>[Manglacharan]</p>
 <p>[Because of their firm determination to follow the instructions of Śukrācārya, his disciples, the demons, are now unconcerned about the demigods. In fact, kings or others who have determined faith in the mercy of brāhmaṇas, cows and the Supreme Personality of Godhead, Kṛsna, and who always worship these three are always strong in their position.]</p>
-<h3>Lecture Transcription</h3>
+<h3 id="lecture-transcription">Lecture Transcription</h3>
 <p>We are reading today from Srimad-Bhagavatam Canto-six, Chapter-seven, entitled- &#x27;Indra offends Bṛhaspati&#x27;, Sloka number,Twenty-four [coughs and clears throat]</p>
-<h3>Crucial principles of bhakti</h3>
+<h3 id="crucial-principles-of-bhakti">Crucial principles of bhakti</h3>
 <p>Many crucial lessons are to be learnt in this particular narration of Sri Sukhadev Goswami, one of which is that Vaishnava etiquette, it is not just a detail, in Krishna consciousness culture, it is crucial, essential, and our spiritual lives depend on it. Oftentimes, devotees have the tendency to make wrong priorities. What is essential, appears to be details, that could either be accepted or rejected according to our convenience, and sometimes what is details, is imagined to be something essential. We know that our sadhana, our bhajan, is crucial to our progress. Srila Rupa Goswami, he explains five principles, of the sixty-four principles, that are most essential for spiritual progress. To associate with Vaishnavas, to chant the holy names of the Lord, to study Srimad-Bhagavatam, to worship the deity, the archa murti and to live in a holy place like Vrindavan, Navadvip, Jagannath Puri, and also worshipping Tulasi, is sometimes within that category. So, to chant the holy names is essential.</p>
 <p>harer nāma harer nāma<br>
 harer nāmaiva kevalam<br>
@@ -74,21 +178,21 @@ syān mahat-sevayā viprāḥ<br>
 puṇya-tīrtha-niṣevaṇāt</p>
 <p>[SB 1.2.16]</p>
 <p>[O twice-born sages, by serving those devotees who are completely freed from all vice, great service is done. By such service, one gains affinity for hearing the messages of Vāsudeva.]</p>
-<h3>How to Worship the Deities?</h3>
+<h3 id="how-to-worship-the-deities">How to Worship the Deities?</h3>
 <p>Just by studying Srimad-Bhagavatam, we may not develop a taste within the heart. There are many scholars of the Bhagavata Purana, who intellectually saturate themselves, but the message does not transform their heart. Why? Because Srimad-Bhagavatam explains, to get a taste for the Bhagavatam, you must observe the proper etiquette, you must serve great souls. That service must come from the heart, with humility, with the desire to please, with care, not to offend. Then Krishna is pleased with our disposition. And as we hear Srimad-Bhagavatam or speak Srimad- Bhagavatam, Krishna manifests himself within our hearts. And the worship of the deity, without proper etiquette, we will not get the proper result. We may even get an opposite result. If we offend the deity, we will not make progress. The deities, Radharani and Krishna, they are there, standing before us, in order to do proper puja-seva we must understand, what they want and what they don&#x27;t want, personally. This is a universal principle. In the Christian religion Jesus Christ said, &quot;If you are coming to bring in all, bring in an offering to the altar, but you have an offensive dispute with someone else, leave your offering, go back, resolve that dispute and then and come and offer to the deity.&quot; A kanishtha adhikari, according to Srimad Bhagavatam is the lowest platform one who worships the deity, but does not offer honor, respect, and service to the devotees, that is devotional service, but it is on a lower platform, because Krishna says, &quot;mad-bhakta-pūjābhyadhikā [SB. 19.11.20-24] worship of my devotee is what pleases me the most.&quot; If we offend the devotees, the Vaishnavas, then do you think Krishna would like to see us, when we come to worship him on the altar? Not at all. So, worship of the deities is one of the five most important principles of bhakti, according to our Gaudiya Vaishnava system. But it is crucial, it is essential to have proper etiquette, in dealings with others, so the deity is pleased.</p>
-<h3>Dhama Apradhas</h3>
+<h3 id="dhama-apradhas">Dhama Apradhas</h3>
 <p>And living in a holy dhama, of Brajabhumi there are naam-aparadhas. There are dhama-aparadhas. It is said that it is the holy land that reveals the holy dhama, because you cannot see Vrindavan with material eyes. premāñjana-cchurita-bhakti-vilocanena [Brahma-saṁhitā 5.38] Krishna is divine, he is transcendental and similarly his abode. The holy dhama is transcendental; it cannot be approached, through our mundane senses. The holy dhama is non- different than Radha Gopinath. The holy Dhama reveals herself, according to how we please her. Vrindavaneshwari, Radharani is the queen of Vrindavan, if she is pleased, she reveals Vrindavan to us. It is not a matter of buying a ticket and going there, and going to shop in Loi bazaar, and we&#x27;re only seeing the superficial external covering of the holy dhama, which is also holy, and will sanctify us but if we actually want to see as it is, to the extent, and to the degree that Srimati Radharani is pleased, she will reveal the holy dhama to us. And how do we please Sri Radha? It is not according to our imagination. We must understand, from the spiritual masters, from the sadhus, from the shastras, and if we follow those principles carefully, then only will we understand what is Vrindavan.</p>
 <p>I remember in 1971, some devotees had an argument with… actually it happened a little later, some of the devotees had an argument with some Brajawasi merchants. By material standards that merchant was trying to cheat the devotees, so they were bargaining, and then they started shouting, and they started pushing. When Srila Prabhupada found out that and he told the devotee, &quot;Leave Vrindavan, go somewhere else, you cannot be here and offend the Brajwasis, even if they try to cheat you, you cannot offend them like this.&quot; This is a certain etiquette, do not be cheated and be respectful [laughter] Otherwise it&#x27;s very dangerous. So why Prabhupada said go out from Vrindavan, unless you know how to behave with him. So, in this way, Vaishnava etiquette is essential, and here in the Srimad-Bhagavatam, which is the topmost scripture, the Amalam Puranam, teaching the highest understanding of the Absolute Truth, culminates in Krishna&#x27;s Braja Lila is explaining so emphatically, through this example today.</p>
-<h3>Possessing Opulence&#x27;s and following Vaishnava etiquette</h3>
+<h3 id="possessing-opulence-s-and-following-vais">Possessing Opulence&#x27;s and following Vaishnava etiquette</h3>
 <p>Indra is a devotee. He is residing in the Svargaloka, and he has such an important service to the Lord. He is the King of the devatas, and for administrative Kings, to do their service properly they need power. They are supposed to be worshiped and honored with opulence, we find every King like that, even very humble Kings. Yudhisthira Maharaja, he was happy living in the forest, but when he was given the King by Krishna, he sat on the throne, with all other royal opulence of the King. But that is an earthly King. Indra&#x27;s powers are beyond human conception, he is the King of the devatas. His subjects are people like Vayu and Agni and Surya. They are reporting to him. Hare Krishna! very powerful. And what magnificent wealth he has, tremendous intellect, physical beauty, fame, wealth, strength, beauty, fame, knowledge, he had all of these opulence&#x27;s beyond him in comprehension. But the sixth one- renunciation, [laughter] there was some shortcoming there. Because the principle of renunciation is really based on the principle of humility. Actual renunciation doesn&#x27;t simply mean, giving up our wealth and our possession, akiñcana-gocaram [SB. 1.8.26] Renunciation means giving up the false sense of proprietorship. To know that everything is the property of Krishna, I am nothing, my wealth, my knowledge, my abilities, my very life, everything is the property of Krishna. If we understand this principle, there is no possibility of becoming proud. janasya moho &#x27;yam ahaṁ mameti [SB.5.5.8] the very root of material bondage are these two misconceptions, I and mine. I am this body.&#x27;</p>
 <p>In this case, I am the King of heaven, I am Indra, I am the Lord of all I serve, and this kingdom, and all of the people within the kingdom are mine. It&#x27;s quite irresistible. Whether we are just sleeping in the streets of Bombay, or we are King of heaven, maya will come to delude you with this misconception of I and mine. So, Indra on this particular day is sitting in this assembly, on his throne, with his beautiful wife Saci beside him, and all the variety of devatas, and even the great sages and rishis, are worshipping him. This was part of the culture, to worship the King. Gandharva&#x27;s were singing for him. Apsaras were dancing for him. Brahmans were chanting Vedic mantras for him. And there was a canopy as bright as the moon over his head, servants were not just ordinary servants, but very exalted personalities were fanning him with a Chamara. Everything in that assembly was exclusively focused on Indra. At that time Brhaspati came in. Not in a… entourage, but just in a very simple and unassuming way Brhaspati just walked in. As he would walk in almost every day, it was a common thing, but Indra, due to false pride, he was so absorbed in receiving worship, so intoxicated by his position and his power, and his wealth, that he did not stand up to offer respects to his guru. He did not even perform the simplest etiquette of folding his palms or offering a place to sit. He considered it is my duty as a King to accept this worship and he carried on.</p>
 <p>Now Brhaspati is very intelligent, he has spiritual vision. He is the knower of Brahman. He understood the mentality of Indra, due to his false pride, he was not offering honor to a Brahman, his guru and a self-realized soul. Brhaspati knew that Indra was intoxicated by pride, and therefore, he would have to be punished by God. Because Krishna says, &quot;kaunteya pratijānīhi na me bhaktaḥ praṇaśyati [Bg 9.31] I protect my devotees.&quot; Krishna gives us so many instructions to protect us. Krishna gives us so many warnings to protect us, but if we neglect them, and we continue to act inappropriately, then out of Krishna&#x27;s mercy, he may have to punish us. It may begin with a little slap, then a stronger slap, and a stronger slap, and if those things don&#x27;t work, as difficult as it may seem and as inconceivable, he may have to cast us down to the bottom of human indecency. He may take away everything, we may have given our life for, in our spiritual search. That may be what we need to become humble, and for Krishna it is worth it, to make us pure devotees. Out of mercy, Krishna withdrew his powers from Indra, because he displeased his spiritual master.</p>
 <p>So, Brhaspati did not say a word to anyone, he just left to go home. But because Indra is a devotee, he was very intelligent. He understood, &quot;I just made a big mistake. Everything I&#x27;ve accomplished in my life is on the verge of ruination, because of this one offense. I must make up.&quot; And Indra spoke to the assembly, he had that much humility, that I have done something, so mad, I ignored the presence of a superior personality, and he spoke to all the demigods, and spoke to all the world through Srimad-Bhagavatam, &quot;It&#x27;s not worth having these material opulence&#x27;s, if it&#x27;s going to cause, our fall down. Better we don&#x27;t have any opulence.&quot; janmaiśvarya-śruta-śrībhir edhamāna-madaḥ pumān [SB 1.8.26] Kunti devi, she tells in this way, &quot;If we want to feelingly cry of the holy name of the Lord, we cannot be attached, nor can we be pursuing these opulence&#x27;s, high birth, wealth, knowledge, beauty, because they intoxicate us with pride. Even if you are a…a person who is spiritually very recognized and honored, Romaharshan Suta was such a person. He was honored by great sages and rishis. He was different than Indra, in the sense that Indra was Kshatriya, a demigod, who was living in royalty, and puffed up by his power, fame, beauty and strength, and wealth.</p>
 <p>Romaharshan Suta was a Brahman, a disciple of Vyasadev, who thoroughly knew the sastras, and who lived a very-very simple life. Brahmans in those days, did not have material possessions. But he did the same thing. When Sri Baladeva came to Naimisharanya, Romaharshan Suta, just went on speaking, That&#x27;s all. Is that such an offence? He just went on speaking. He didn&#x27;t think it was necessary for himself, to offer respect, to a superior personality. So Balaramaji, out of mercy to Romaharshan Suta, and to show the whole world the importance of Vaishnava etiquette, he condemned Romaharshan Suta, &quot;What is the use of all your knowledge of Vedas? What is the use of you being a disciple of Vyasadev? What is the use of you being such a great orator, and such a powerful, famous brahman? if it makes you proud&quot; and with a piece of grass, he ended Romaharshan&#x27;s life. Vaishnava etiquette is not a detail, it is crucial. We read it again and again, in the Holy Scriptures. And in the case of Indra, he ignored offering proper respect, for two reasons. One; is because of his pride, two; because he had the sense of familiarity. Srila Prabhupada and other acharyas explain that, Brghu, [umm] Brhaspati would regularly come to visit Indra and the devatas, almost on a daily basis, it is said, &quot;Familiarity breeds contempt.&quot; We take things for granted, if they are too much available to us. And that is what Indra did. Here is a very-very important puja going on to him, and Brhaspati, he comes all the time, so he just carried on what he thought was his service. It was his service to be honored by demigods. He just was performing his service. But then he realized, it&#x27;s too late. Brhaspati did not curse Indra, he just knew that Krishna was about to teach him a good lesson, so he left. Now Brhaspati was not angry at Indra, because he offended him. Brhaspati was displeased with Indra, because he knew he was creating his own ruination due to his ahankara, his ego. So, he left. Now, so subtle, the demigods do not need the internet [laughter] Immediately, the asuras understood Indra has offended his guru. Therefore, he is going to be in a pitious weak condition, and because of his offense all the demigods will lose their powers. So, what did the demons do? They worshipped Shukracharya, their guru, and they got great powers, and immediately, they attacked, devatas, their arms and their legs and their heads and their bodies were being pierced by sharp arrows, and, and bludgeoned by hard clubs, they were helpless, defeated, all they could do is run away. They ran to Lord Brahma, begging him for help. And here we find, Lord Brahma, chastising them for being so ignorant. &quot;Oh, best of the demigods, unfortunately, because of madness resulting from your material opulence, you failed to receive Brhaspati properly, when he came to your assembly, because he is aware of the Supreme Brahman, and fully in control of his senses, he is the best of the Brahmans, therefore, it is very astonishing that you have acted impudently toward him.&quot; Now if he would have stood up and said, &quot;Brhaspati, twenty years ago, you had some problem with somebody else, that would have been more of an offense or Brhaspati…he didn&#x27;t insult him, he didn&#x27;t do anything wrong to him, he just didn&#x27;t stand up to offer respect. And that only lasted for a minute or two. Then he was willing to do it. But in that min… minute or two, he neglected a great personality.</p>
-<h3>Krishna Following Vaishnava Etiquette</h3>
+<h3 id="krishna-following-vaishnava-etiquette">Krishna Following Vaishnava Etiquette</h3>
 <p>Vaishnava etiquette is something very serious, and therefore, the Supreme Lord as well as his devotees, teach us this principle, amāninā māna-dena [Cc Ādi 17.31, Śikṣāṣṭaka 3] to offer respect to others. Srila Prabhupada herein quotes that Krishna, he is full of all six opulence&#x27;s. Whatever Indra or anyone else has is only by the grace of Krishna. He is the Supreme Lord, he is jagat-pate - the Lord of the universe, and when he was in his palace in Dwaraka, when Narada Muni came in to the assembly, Krishna came down, offered his throne, to offer all respect, honor and worship Narada Muni. Narada Muni knows that he is the Supreme Lord, I am only his devotee, but still, Prabhupada says, because he was a brahmachari, and a Brahman, and a realized sage, Krishna, wanted to show the world by his example. In Bhagavad-gita Krishna tells, &quot;If I do not set the proper example by my standards, then the whole world will be ruined because they will not know.&quot; Similarly, Sudama Vipra, he wasn&#x27;t an inter… inter universal celebrated sages, like Narada Rishi. Sudama Vipra was just an unknown Brahman. Just living in Porbander, outside of Dwaraka. Absolutely, poverty stricken from a material sense. Can you imagine, the best thing that he could bring to Krishna, was a little cloth bag of chipped rice? That&#x27;s the best he could get. And yet, when he came into Krishna&#x27;s palace, Lord Krishna stood up, put him on his own bed, washed his feet, and Sudama Brahman, he… offered that beautiful prayer, &quot;Who am I? Just a very fallen poor hearted Brahman, and who are you, the Supreme Personality of Godhead, the God of all Gods. The husband of Lakshmi and yet, you are honoring me. Why?&quot; Krishna is making a very powerful statement, of how crucial it is, to be respectful to others.</p>
 <p>And we have Sri Ramachandra, although he was the Lord of everything, how he respected the Brahmans, the sages and his gurus. He would massage the feet of Vishvamitra Muni. He would not eat or sleep, until he received the permission of Vishvamitra Muni, when they were travelling in the forest together. Ramachandra was offering humble questions before his guru. Obviously, Rama knows more than Visvamitra Muni. vedaiś ca sarvair aham eva vedyo [Bg 15.15] &#x27;He is the cause of the Vedas, he is the source of the Vedas, he is the knower of the Vedas, and he… all the Vedas are to know him&#x27;. And yet, he is asking Visvamitra Muni, &quot;Tell me…tell me about what the Vedas say, about the Ganga?&quot; The Ganga&#x27;s coming from his feet, he knows, but he is…but he is enquiring from Visvamitra Muni, please explain to me the glories of Ganga, why? To show the world what it means to actually honor a superior personality. Superior in the sense, in the sense of etiquette, of social position. And in Mithila, Lord Shankar&#x27;s bow was on that altar, and all the royalty of Mithila including Sita herself were assembled to see, if Sri Ramachandra could be the one, to lift that bow and string it. Rama&#x27;s heart was palpitating with anticipation to be reunited with his eternal beloved consort- Janaki, and Sita devi, her heart was over flooding with anticipation to be united with her Lord-Sri Rama. But still, Lord Ramachandra first asked permission from Visvamitra Muni, he took his blessings, before going to lift the bow. To show the world, Vaishnava etiquette, and its importance. If the Lord observes it, what is our position?</p>
-<h3>Mahaprabhu teaches us Vaishnava etiquette</h3>
+<h3 id="mahaprabhu-teaches-us-vaishnava-etiquett">Mahaprabhu teaches us Vaishnava etiquette</h3>
 <p>Sri Chaitanya Mahaprabhu, how he honored his spiritual master. He was Nimai Pandit- the greatest number one top scholar, in all of creation. And yet, when Ishvara puri asked him, &quot;Please edit my book- Krishna Lilamrita. Nimai Pandit said, &quot;How can I edit your words? you are a great devotee. Even if your words are wrong, they are better than being right.&quot; The Bhagavatam explains, persons who are actually highly advanced, they relish hearing the glories of the Lord, even if not composed properly, even if not pronounced properly, even if there may be some apparent flaws, they will never hesitate to hear from such persons. Because you are speaking with devotion. So, Nimai Pandit said, &quot;I cannot, you are a great devotee, whatever you say, is with love for Krishna, therefore it is perfect. Only a fool, who is ignorant, could think that there could be a mistake in what you are speaking.&quot; And later on, when Lord Chaitanya took initiation from Ishvara puri, he offered him such respect, he brought him to his house first, and, and …and served him Prasad, and sat at his feet and heard Krishna katha from him, and later on he went to Gaya, and fell at his feet, begged for initiation, and served him, in such a menial way. And not only to his guru, but to all senior personalities Lord Chaitanya, although he is Radha and Krishna, rādhā kṛṣṇa-praṇaya-vikṛtir hlādinī-śaktir asmād [Cc Ādi 1.5]Krishna and Radha are two but they have appeared in one form as Lord Chaitanya Mahaprabhu. Lord Chaitanya is Krishna, with the sentiments of the Mahabhava of Sri Radharani, and with her beautiful golden complexion. This is supreme. Yet, Lord Chaitanya wanted to teach the world by his example. He came as an acharya. And how he honored, seeing you people. Keshav Kashmiri; he was a Brahman; he was a gifted disciple of Saraswati. But he was proud, but still, Lord Chaitanya, honored his position. Lord Chaitanya defeated him, in such a miraculous way, that he never ever in a slightest way disrespected him, and even when the students of Lord Chaitanya, laughed at Keshav Kashmiri, seeing him defeated so soundly, Lord Chaitanya stopped them, &quot;Do not laugh, honor him, respect him.&quot; Keshav Kashmiri came to Lord Chaitanya and said, &quot;I could understand that you are the supreme Lord, not only because Saraswati appeared to me and chastised me, and revealed your identity, but who else, but the supreme Lord could defeat such a proud person as me, without disrespecting me.&quot; Hare Krishna!</p>
 <p>And how Lord Chaitanya honored all of his gurus, all of the senior Vaishnavas. He treated Paramananda Puri as his own guru, Brahmananda Bharti, Brahmananda Puri, Nityananda Prabhu and how he honored Advaita Prabhu. Advaita Prabhu was very upset about this. He had to go to extremes of teaching Mayavad philosophy publicly, profusely, that was the extent, he had to displease…to, to get Lord Chaitanya to give up his respectful demeanor toward him, and then it was only for a minute or two. So, Lord Chaitanya, he really showed Vaishnava etiquette, and one of the most classic examples is Ramachandra Puri, he had offended his own guru. He was an envious person. Because of his offense to his spiritual master, his love in life was to criticize others. Maya&#x27;s so strong, according to the particular modes of nature, people take pleasure in such amazingly variegated ways. His pleasure in life was to condemn and criticize. And he was criticizing all the devotees, and then he went on a propaganda attack against Sri Chaitanya Mahaprabhu. But because he was his guru&#x27;s god brother, and he was a Brahman, and he was a sanyasi, Lord Chaitanya respected him. It&#x27;s actually amazing. He said, &quot;You eat too much.&quot; So, Lord Chaitanya said, &quot;Cut down all my Prasad, he is saying I eat too much, just a handful of boiled rice that&#x27;s what I need.&quot; Hare Krishna! Devotees were tortured by this, but still, he showed honor and respect, etiquette. Why in such a graphic situation? Because it is not a detail, it is essential.</p>
 <p>One great personality from Navadvip, he said, &quot;The, the one thing I most concerned about, and worried about, within a ISKCON…within your ISKCON movement, is I find, that the devotees of ISKCON are not fearful, of committing Vaishnava aparadha. &quot;Because of the lack of culture, and a lack of understanding of what Vaishnavism really is, we think we can say anything, about anyone, at any time. But the problem is even if you are right, and you don&#x27;t say it right, you are wrong. You may be literally correct about something, but fall down for saying it. And the world is the mirror of our consciousness. Why do we see faults in others? Srila Bhaktisiddhanta Saraswati says, &quot;Only because I am filled with faults myself? &quot;If you&#x27;re pure in heart, you will see good in others, and if you do see the fault, you will, you will speak with compassion. But we see faults in others, because they&#x27;re reflecting our own faults, that is the general principle. And when we read Srimad-Bhagavatam, throughout, it talks about Vaishnava apradha. Duryodhana performed Vaishnava aparadha, and what happened? Hiranyakashipu performed Vaishnava apradha, and what happened? Of course, we are not so fortunate. If we commit Vaishnava aparadha, we just fall down and suffer. Hiranyakashipu, he was a special aparadhi. [laughter] Lord Narasimhadev gave him special, a… blessings. Durvasa Muni, performed apradha to Ambrish Maharaja, and despite being such a powerful great sage and rishi, he was helpless, running…running for his life. There are many stories as such. Sri Chaitanya Charitamrita, Gopal chapala, Gopal Chakravarti, Amogha, why are there so many of these lessons, repeatedly told to us in the scriptures, because it&#x27;s not a detail. It is crucial to our spiritual survival. And Sri Chaitanya Maha Prabhu made it so simple; everything is contained in that one verse,</p>
@@ -98,23 +202,73 @@ amāninā māna-dena<br>
 kīrtanīyaḥ sadā hariḥ</p>
 <p>[Cc Adi 17.31, Śikṣāṣṭaka 3]</p>
 <p>[One who thinks himself lower than the grass, who is more tolerant than a tree, and who does not expect personal honor yet is always prepared to give all respect to others can very easily always chant the holy name of the Lord]</p>
-<h3>Today is the time to learn</h3>
+<h3 id="today-is-the-time-to-learn">Today is the time to learn</h3>
 <p>To be humble, if you&#x27;re forbearing, if we offer respects to others, and not expect respect from others, then we&#x27;re always safe. Even if you are very powerful, if Krishna takes away his mercy, we have no strength to resist the temptations of maya. That is the illusion. nūnaṁ pramattaḥ kurute vikarma [SB 5.5.4] we become mad when we have this desire for sense enjoyment. Srila Prabhupada said, &quot;The trouble with you devotees, if you do, he was especially talking about western devotees, but because here in Bombay you are also grossly westernized. [laugher] Anything Prabhupada said about, his the nice American, European boys and girls, very much applies to you, because most of the machines you are using are western, when you go to accept for the brahmacharya, the clothes you wear are western, you are speaking western language. Haribol! You probably even drive western cars, so yes, very westernized.</p>
 <p>Prabhupada said, &quot;The problem with you[your] western people is[are] you do not have enough fear of maya.&quot; Maya&#x27;s very powerful; she can devastate us and take everything away within a moment, if we&#x27;re inattentive, our life can end in a moment, spiritually, materially, socially. We cannot procrastinate, we cannot think, some other time I&#x27;ll get serious, some other time, I will be respectful to seniors, some other time I will become more, [umm] strict, in my sadhana, in my regulative principles. Indra, he realized his mistake in a matter of minutes, and it was too late, everything was gone and we&#x27;re thinking, maybe next year, or the year after, or the year after. Oh! I am still young, my hair is not grey yet, and for the brahmacharis, nobody knows its grey or not. [laughter] We better grow some and realize it is happening to me also. So, this is the illusion of maya, that we put what we need to do off for another time, but the problem is that time may never come, because by the time you expect that time will come, it may be too late. You may be in a helpless condition, an impossible condition. So, we must be very careful. Lord Chaitanya said, &quot;Vaishnava etiquette is the, is the ornament that makes a devotee beautiful before God.&quot; This is culture. And the etiquette, is essentially, how we treat each other. And how we treat Krishna on the altar, Radha Gopinath. They are watching twenty-four hours a day from within and without.</p>
-<h3>Brahma criticizing the demigods</h3>
+<h3 id="brahma-criticizing-the-demigods">Brahma criticizing the demigods</h3>
 <p>Yes, Lord Brahma, he is chastising, &quot;You are such fools. Due to your material opulence, you thought you were entitled, you thought you were immune, from offences and now look, you&#x27;ve lost everything.&quot; And as we had spoken, Brahma is condemning material opulence, I mean… Indra was as well. It&#x27;s not worth being learned, if it&#x27;s going to cause you to be proud, and think you are better to others. It&#x27;s better to be ignorant, not ignorant, be learned, but, you may not be able to understand, so with such opulence&#x27;s. It&#x27;s better to be simple than to be learned, and think yourself better than others. It&#x27;s better to be poverty stricken, and to be rich, and think yourself to be better than others. It&#x27;s better to be emaciated, sickly and deceased, than to be healthy and strong, and think yourself better than others. It&#x27;s better to be ugly, than to be beautiful, and think you&#x27;re better to others. This is what is being spoken in Srimad -Bhagavatam. But if you have these opulence&#x27;s, if you have beauty, and knowledge and fame, and you understand the principle of etiquette, that I am always the servant of the servant of the servant, then these opulence&#x27;s can be of great value in the service of the Lord. Lord Brahma in today&#x27;s verse, he is stating that, &quot;Because of their firm determination to follow the instructions of Sukracharya his disciples- the demons, are now unconcerned about the demigods.&quot; Brahma is really chastising everyone. Because the demigod thinks they are so great, and so powerful, and so, umm… important, but he is saying that, &quot;The demigods are not even concerned about you people, you are simply insignificant to them.&quot; Haribol!</p>
 <p>Firm faith is the secret of progress in spiritual life</p>
 <p>In fact, Kings and others, who have determined faith in Brahmans and cows, and the Supreme Personality of Godhead Krishna, who are always…who always worship these three, are always strong in their position. This is the secret of success in spiritual life. To have firm determination. Now this word is very important. Because there are so many excuses, there are so many temptations. In giving honor and faith, we have to be determined, determined to honor, determined to develop faith, in the mercy of the Brahmans, the cows and the Supreme Personality of Godhead. The fact that he uses this word determined, that means there must be a very concerted effort. Determined means there are going to be many obstacles, there are going to be many alternatives, unless you are determined, you are going to fall. vyavasāyātmikā buddhir ekeha kuru-nandana [Bg 2.41] Krishna says, &quot;Those who on this path, are resolute in this purpose, they are determined, their aim is one, they do not a… vacillate. So determined faith, in the mercy of the Brahmans, the cows, and the Supreme Personality of Godhead.</p>
-<h3>Who are Brahmans?</h3>
+<h3 id="who-are-brahmans">Who are Brahmans?</h3>
 <p>Brahmans means sup… superior spiritual people. Now if we feel that we are superior, we cannot actually have faith in the mercy of others. Therefore, Chaitanya Maha Prabhu, such a striking instruction he gave us, &quot;I am not a brahman, a kshatriya, a vaishya, or a sudra. I am not a sanaysi, a vanaprastha, a grihastha, or a brahmachari.&quot; gopī-bhartuḥ pada-kamalayor dāsa-dāsānudāsaḥ [Cc Madhya 13.80] &quot;I am only the servant of the servant of the servant.&quot; If we develop this attitude, we will offer all respects to others. We will be safe. We must honor those who are speaking, and who are living by Krishna&#x27;s instructions, that is the Brahmans, and higher than the Brahman is a Vaishnava. Even a Vaishnava, who is born in a sudra family, is higher than a Brahman in the varnashrama system, why… because he is surrendering to the Lord in the feet of the Supreme Personality of Godhead. Haridas Thakur was… untouchable by caste, but anyone who offended him, was destroyed, and it was all Brahmans that offended him, yes. Within the Hindu civilization, is all the Brahmans were making apradhas, and they were all falling down, because they didn&#x27;t recognize. Brahmans and Vaishnavas must be respected. We must have determined faith in their mercy.</p>
-<h3>Why does Krishna love cows?</h3>
+<h3 id="why-does-krishna-love-cows">Why does Krishna love cows?</h3>
 <p>And the cows, Krishna is Gopal, Govinda. He is eternally, serving the cows, giving pleasure to the cows. In fact, his own abode, Goloka, Gokula, by his own choice, he named after the cows. It also, Krishnaloka, but more common said, than Krishnaloka is Goloka, or Gokula, he wanted to give the honor and the glory to the cows. When Srila Prabhupada established cow protection in the west, it wasn&#x27;t simply on the basis of non-violence-ahimsa, that was there, that we must teach people how to properly respect God&#x27;s creat…God&#x27;s children. He taught us to be vegetarian, no eating of meat, fish, eggs, or even onions or garlic, so that we…we would not commit sinful activities, or degrade our consciousness. But why he so especially established cow protection in western world, in places like New Talavan, New Vrindavan, and he speaks about it so profusely, because it&#x27;s necessary for our spiritual progress.</p>
 <p>We worship Tulasi because she is so dear to Krishna. We worship the Vaishnavas, because they are so dear to Krishna. And we worship the cow, because she is so dear to Krishna. Why is she dear to Krishna? For so many reasons. She is eating simple grass, which is useless to a human being, and creating the most miraculous food stuff, milk, and so many preparations from milk, from the ghee we can perform yajna, we can also put it on chapattis, and offer it to Krishna. In fact, in the Third Canto Krishna explains, &quot;I am more happy eating through the mouths of the Brahmans, nice food prepared in ghee,&quot; that gives pleasure to Krishna. In the west, Srila Prabhupada established that for there to do properly deity worship, we have to grow Tulasi leaves, and we have to have milk, because Krishna likes milk, and dahi, sandesh, rasagulla, gulab jamun made in ghee, yes, and burfi and peda [laughs] and rabri and srikhand, and rasmalai. [Laughs] Krishnananda is [laughs] he likes rasmalai, I think [laugh]. So many, there&#x27;s hundreds of thousands of preparations we can make from milk, and why do we do, because Krishna likes. And Krishna likes what&#x27;s good for us. The cow and the bull represent the Vedic culture, not only symbolically, but practically. The bull is tilling the fields, and making grains possible, besides…being the very symbol of dharma, and the cow is giving ghee, and milk and so many products, to help us worship the Lord, and be healthy, and happy. The cow is our mother. The bull is our father. To disrespect the cow or the bull, is to… disrespect our own mother and father. In other words, if we&#x27;re seeing the cow and bull as our mother and father, that means we are seeing them in a superior position than ourselves. This is very serious. Your mother and father is in a superior position to yourself, as far as etiquette. Now brahmacharis may not do everything that their mother and father says [laugh] but, but they perform their duties, and they give honor and respect. Never dis-honor or respect…disrespect your mother and father, it&#x27;s sinful. You can do what you have to do, but do it with etiquette[laughter] Now if the cow and the bull is our mother and father that means, they are in… we see them in...in a superior position. That is how we make spiritual progress.</p>
-<h3>Proper etiquette transforms every place in to Vaikuntha</h3>
+<h3 id="proper-etiquette-transforms-every-place-">Proper etiquette transforms every place in to Vaikuntha</h3>
 <p>To have determined faith, in Krishna, manifesting himself through the Brahmans, and Vaishnavas, through the cows, and of course, the Supreme Personality of Godhead, who is in the archa murti, who is in the holy name, who is in the Srimad-Bhagavatam, and who is in the heart of every living being. This is proper etiquette, it is very serious, and where proper exchanges of Vaishnava etiquette are shared amongst the devotees, that place becomes like Vaikuntha. Not because we make it like Vaikuntha, but because we&#x27;re pleasing Krishna, and Krishna and Radharani and their spiritual abode descend in that place, to create a Vaikuntha atmosphere. That is all important. It is not just something that we should like to do, it is something that we will be ruined and destroyed, if we don&#x27;t do. Hare Krishna! And that is what we read today, in the Seventh Chapter of the Sixth Canto of the Srimad-Bhagavatam.</p>
-<h3>Srila Prabhupada ki…[Devotees:] &quot;jay!&quot;</h3>
+<h3 id="srila-prabhupada-ki-devotees-jay">Srila Prabhupada ki…[Devotees:] &quot;jay!&quot;</h3>
 <p>Thank You very much. Goswamiji, would you like to speak something? [Guests talking] [Goswamiji speaks from 1.11 onward]</p>
 </main>
 <footer>Transcribed by devotee volunteers · Radhanath Swami Media Transcription Project</footer>
+
+<script>
+(function() {
+  const root = document.documentElement;
+  const main = document.getElementById('mainText');
+  const KEY = 'fss-reader-prefs';
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function save(prefs) {
+    try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch (e) {}
+  }
+
+  let prefs = Object.assign({ theme: 'light', scale: 1, measure: '68ch', justify: 'left' }, load());
+
+  function apply() {
+    root.setAttribute('data-theme', prefs.theme);
+    root.style.setProperty('--scale', prefs.scale);
+    root.style.setProperty('--measure', prefs.measure);
+    main.classList.toggle('justify', prefs.justify === 'justify');
+
+    document.querySelectorAll('.tb-swatch').forEach(b =>
+      b.classList.toggle('active', b.dataset.theme === prefs.theme));
+    document.querySelectorAll('[data-measure]').forEach(b =>
+      b.classList.toggle('active', b.dataset.measure === prefs.measure));
+    document.querySelectorAll('[data-justify]').forEach(b =>
+      b.classList.toggle('active', b.dataset.justify === prefs.justify));
+  }
+
+  document.querySelectorAll('.tb-swatch').forEach(b => b.addEventListener('click', () => {
+    prefs.theme = b.dataset.theme; save(prefs); apply();
+  }));
+  document.querySelectorAll('[data-measure]').forEach(b => b.addEventListener('click', () => {
+    prefs.measure = b.dataset.measure; save(prefs); apply();
+  }));
+  document.querySelectorAll('[data-justify]').forEach(b => b.addEventListener('click', () => {
+    prefs.justify = b.dataset.justify; save(prefs); apply();
+  }));
+  document.getElementById('sizeUp').addEventListener('click', () => {
+    prefs.scale = Math.min(1.6, Math.round((prefs.scale + 0.1) * 10) / 10); save(prefs); apply();
+  });
+  document.getElementById('sizeDown').addEventListener('click', () => {
+    prefs.scale = Math.max(0.75, Math.round((prefs.scale - 0.1) * 10) / 10); save(prefs); apply();
+  });
+
+  apply();
+})();
+</script>
+
 </body>
 </html>
