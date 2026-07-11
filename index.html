@@ -311,6 +311,17 @@ function driveSearchUrl(num) {
   return "https://drive.google.com/drive/folders/" + DRIVE_FOLDER_ID + "?q=" + q;
 }
 
+// Tracks with a dedicated transcript page built directly into the site.
+// Everything else still links out to the Drive folder for now.
+const LOCAL_TRANSCRIPTS = new Set(["0898"]);
+
+function transcriptUrl(num) {
+  if (LOCAL_TRANSCRIPTS.has(num)) {
+    return "transcripts/" + num + ".html";
+  }
+  return driveSearchUrl(num);
+}
+
 const listEl = document.getElementById('list');
 const emptyEl = document.getElementById('empty');
 const countEl = document.getElementById('count');
@@ -345,8 +356,9 @@ function render() {
     const statusHtml = r.st === 'Match'
       ? '<span class="status ok">Found</span>'
       : '<span class="status no">No transcript</span>';
+    const isLocal = LOCAL_TRANSCRIPTS.has(r.n);
     const actionHtml = r.st === 'Match'
-      ? '<a href="' + driveSearchUrl(r.n) + '" target="_blank" rel="noopener">Open transcript ↗</a>'
+      ? '<a href="' + transcriptUrl(r.n) + '"' + (isLocal ? '' : ' target="_blank" rel="noopener"') + '>' + (isLocal ? 'Read transcript' : 'Open transcript ↗') + '</a>'
       : '<span>—</span>';
     return '<div class="row">'
       + '<div class="tab ' + tabClass + '"></div>'
